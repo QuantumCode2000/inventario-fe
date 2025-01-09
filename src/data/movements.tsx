@@ -1,0 +1,3 @@
+const movimientos = [];
+
+export { movimientos };

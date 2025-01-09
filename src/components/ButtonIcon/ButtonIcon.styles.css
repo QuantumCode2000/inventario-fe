@@ -1,0 +1,14 @@
+.button-icon_style button {
+  background-color: #51a6b0;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+  width: 40px;
+  margin: 0;
+  padding: 0;
+  transition: background-color 0.3s;
+}
