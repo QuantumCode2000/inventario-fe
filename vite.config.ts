@@ -18,4 +18,8 @@ export default defineConfig({
       plugins: [tailwindcss()],
     },
   },
+  server: {
+    host: "0.0.0.0", // Esto permite que el servidor escuche en todas las interfaces de red
+    port: 5173, // El puerto que desees (5173 es el predeterminado)
+  },
 });
