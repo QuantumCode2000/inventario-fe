@@ -20,9 +20,9 @@ const firstState: User = {
   apellidoMaterno: "",
   email: "",
   password: "",
-  inSystemPermissions: "No",
-  rol: "Personal",
-  estado: "Activo",
+  cargo: "",
+  rol: "administrador", // Valor predeterminado
+  estado: "activo", // Valor predeterminado
 };
 
 const PersonalRegister: React.FC = () => {
@@ -113,18 +113,18 @@ const PersonalRegister: React.FC = () => {
 
   const renderCell = (item: User, key: keyof User) => {
     switch (key) {
-      case "inSystemPermissions":
-        return (
-          <span
-            className={
-              item[key] === "Sí"
-                ? "bg-green-500 text-white px-2 py-1 rounded"
-                : "bg-red-500 text-white px-2 py-1 rounded"
-            }
-          >
-            {item[key]}
-          </span>
-        );
+      // case "inSystemPermissions":
+      //   return (
+      //     <span
+      //       className={
+      //         item[key] === "Sí"
+      //           ? "bg-green-500 text-white px-2 py-1 rounded"
+      //           : "bg-red-500 text-white px-2 py-1 rounded"
+      //       }
+      //     >
+      //       {item[key]}
+      //     </span>
+      //   );
       case "estado":
         return (
           <span
@@ -196,15 +196,14 @@ const PersonalRegister: React.FC = () => {
         onClose={closeModal}
       >
         {error && <p className="text-red-500">{error}</p>} {/* Mostrar error */}
-        {isEdit ? (
-          <FormPersonalEdit
-            formData={formData}
-            formDataEdit={formDataEdit}
-            setModifiedData={setModifiedData}
-            handleChangeEdit={handleChangeEdit}
-            handleSubmit={handleSubmit}
-          />
-        ) : (
+        {isEdit ? // <FormPersonalEdit
+        //   formData={formData}
+        //   formDataEdit={formDataEdit}
+        //   setModifiedData={setModifiedData}
+        //   handleChangeEdit={handleChangeEdit}
+        //   handleSubmit={handleSubmit}
+        // />
+        null : (
           <FormPersonalRegister
             formData={formData}
             handleChange={handleChange}

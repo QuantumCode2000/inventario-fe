@@ -33,6 +33,7 @@ const UsersProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
 
   // Función para agregar un nuevo usuario
   const addUser = async (user: User) => {
+    console.log(user);
     try {
       const response = await axios.post(
         "http://localhost:3000/api/v1/usuarios",

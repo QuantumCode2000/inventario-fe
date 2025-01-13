@@ -6,14 +6,16 @@ import { UsersProvider } from "./contexts/UsersContext/UsersContext.tsx";
 import { AuthProvider } from "./contexts/AuthContext/AuthContext.tsx";
 import { InventarioProvider } from "./contexts/InventarioContext/InventarioContext.tsx";
 import { EntradasProvider } from "./contexts/EntradasContext/EntradasContext.tsx";
-
+import { SalidasProvider } from "./contexts/SalidasContext/SalidasContext.tsx";
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <UsersProvider>
     <AuthProvider>
       <React.StrictMode>
         <InventarioProvider>
           <EntradasProvider>
-            <App />
+            <SalidasProvider>
+              <App />
+            </SalidasProvider>
           </EntradasProvider>
         </InventarioProvider>
       </React.StrictMode>
