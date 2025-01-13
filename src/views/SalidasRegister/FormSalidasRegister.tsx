@@ -24,7 +24,9 @@ const FormSalidasRegister: React.FC<FormSalidasRegisterProps> = ({
   // Llamar a los items desde la API
   const getItems = async () => {
     try {
-      const response = await axios.get("http://54.234.14.21:3000/api/v1/items");
+      const response = await axios.get(
+        "http://54.234.14.21:3000/api/v1/inventarios",
+      );
       setItems(response.data); // Guardamos los items completos
     } catch (error) {
       console.error("Error fetching items:", error);
@@ -37,7 +39,7 @@ const FormSalidasRegister: React.FC<FormSalidasRegisterProps> = ({
 
   // Maneja el cambio de item, actualiza código y unidad de medida automáticamente
   const handleItemChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedItem = items.find((item) => item.nombre === e.target.value);
+    const selectedItem = items.find((item) => item.item === e.target.value);
     if (selectedItem) {
       formData.codigo = selectedItem.codigo; // Actualiza el código
       formData.unidadMedida = selectedItem.unidadMedida; // Actualiza la unidad de medida
@@ -91,7 +93,7 @@ const FormSalidasRegister: React.FC<FormSalidasRegisterProps> = ({
         <Select
           id="item"
           label="Item"
-          options={items.map((item) => item.nombre)}
+          options={items.map((item) => item.item)}
           value={formData.item}
           onChange={handleItemChange}
           error={localErrors.item}
