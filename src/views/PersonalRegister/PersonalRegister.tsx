@@ -94,7 +94,7 @@ const PersonalRegister: React.FC = () => {
   const handleSubmit = async () => {
     try {
       if (isEdit) {
-        await updateUser(modifiedData); // Aquí se incluye la nueva contraseña si se cambió
+        await updateUser(modifiedData as User); // Aquí se incluye la nueva contraseña si se cambió
       } else {
         await addUser({
           ...formData,

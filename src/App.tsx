@@ -4,20 +4,10 @@ import PersonalRegister from "./views/PersonalRegister/PersonalRegister";
 import PrivateRoute from "./routers/PrivateRoute/PrivateRoute";
 import PublicRoute from "./routers/PublicRoute/PublicRoute";
 import Layout from "./layout/Layout";
-// import { useUsers } from "./contexts/UsersContext/UsersContext";
-
+import EntradasRegister from "./views/EntradasRegister/EntradasRegister";
 import InventarioRegister from "./views/InventatioRegister/InventarioRegister";
-import PedidosRegister from "./views/Pedidos/PedidosRegister";
-import Pedidos from "./views/Pedidos/Pedidos";
+import SalidasRegister from "./views/SalidasRegister/SalidasRegister";
 function App() {
-  // const { users } = useUsers();
-  // const currentLocalStorageUser = localStorage.getItem("user");
-  // const currentUser = currentLocalStorageUser
-  //   ? users.find(
-  //       (user) => user.email === JSON.parse(currentLocalStorageUser).email,
-  //     )
-  //   : null;
-
   const router = createBrowserRouter([
     {
       path: "/",
@@ -85,18 +75,18 @@ function App() {
           ),
         },
         {
-          path: "Registrar-pedidos",
+          path: "registrar-entradas",
           element: (
             <PrivateRoute requiredRole="administrador">
-              <PedidosRegister />
+              <EntradasRegister />
             </PrivateRoute>
           ),
         },
         {
-          path: "pedidos",
+          path: "registrar-salidas",
           element: (
             <PrivateRoute requiredRole="administrador">
-              <Pedidos />
+              <SalidasRegister />
             </PrivateRoute>
           ),
         },

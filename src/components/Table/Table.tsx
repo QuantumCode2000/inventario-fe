@@ -5,11 +5,10 @@ import CustomFilter from "../CustomFilter/CustomFilter";
 import Pagination from "./Pagination";
 
 interface TableProps {
-  header: { [key: string]: string }; // header es un objeto con claves y etiquetas de columnas
-
-  body: Array<{ [key: string]: any }>; // body es un array de objetos que representan las filas
+  header: { [key: string]: string };
+  body: Array<{ [key: string]: any }>;
   data: { [key: string]: string }[];
-  renderCell: (value: any, key: string, rowIndex: number) => JSX.Element; // Función para renderizar celdas
+  renderCell: (value: any, key: string, rowIndex: number) => JSX.Element;
 }
 
 const Table: React.FC<TableProps> = ({ header, body, renderCell }) => {
@@ -59,6 +58,7 @@ const Table: React.FC<TableProps> = ({ header, body, renderCell }) => {
         filterText={filterText}
         onColumnChange={handleColumnChange}
         onFilterChange={handleFilterChange}
+        ignoredColumns={["id", "acciones"]}
       />
       <div className="w-full mb-8 overflow-hidden rounded-lg shadow-lg">
         <div className="w-full overflow-auto max-h-96">

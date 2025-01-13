@@ -2,7 +2,7 @@ import { CgNotes } from "react-icons/cg";
 import { MdOutlineInventory } from "react-icons/md";
 import { RiUserSettingsFill } from "react-icons/ri";
 import { RxUpdate } from "react-icons/rx";
-import { BiSolidReport } from "react-icons/bi";
+import { FaCashRegister } from "react-icons/fa";
 
 interface Option {
   to: string;
@@ -83,17 +83,17 @@ const optionsAdmin: OptionGroup[] = [
     ],
   },
   {
-    text: "Pedidos",
+    text: "Registros",
     options: [
       {
-        to: "/Registrar-Pedidos",
-        icon: <BiSolidReport />,
-        text: "Registrar Pedidos",
+        to: "/registrar-salidas",
+        icon: <FaCashRegister />,
+        text: "Salidas",
       },
       {
-        to: "/Pedidos",
-        icon: <BiSolidReport />,
-        text: "Pedidos",
+        to: "/registrar-entradas",
+        icon: <FaCashRegister />,
+        text: "Entradas",
       },
     ],
   },

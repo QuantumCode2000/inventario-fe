@@ -2,9 +2,7 @@ import React, { useState } from "react";
 import Input from "../../components/Input/Input";
 import Select from "../../components/Select/Select";
 import Modal from "../../components/Modal/Modal";
-import {
-  departamentos,
-} from "../../data/selectOptions";
+import { departamentos } from "../../data/selectOptions";
 import { User } from "../../contexts/UsersContext/interfaces";
 
 const roles = ["Administrador", "Encargado", "Personal"];
@@ -19,6 +17,7 @@ interface FormPersonalEditProps {
   handleSubmit: () => void;
   handlePasswordChange: (newPassword: string) => void;
   formDataEdit: User;
+  setModifiedData: (data: Partial<User>) => void;
 }
 
 const FormPersonalEdit: React.FC<FormPersonalEditProps> = ({
@@ -49,8 +48,11 @@ const FormPersonalEdit: React.FC<FormPersonalEditProps> = ({
     if (showPasswordFields) {
       if (!password) newErrors.password = "Nueva contraseña es requerida";
       if (!confirmPassword)
+        // Ignorar el error del lint de typescript
+        // @ts-ignore Inicializar el error de confirmar contraseña
         newErrors.confirmPassword = "Confirmar contraseña es requerido";
       if (password !== confirmPassword)
+        // @ts-ignore Inicializar el error de contraseña no coinciden
         newErrors.passwordMismatch = "Las contraseñas no coinciden";
     }
 
@@ -86,13 +88,14 @@ const FormPersonalEdit: React.FC<FormPersonalEditProps> = ({
       setLocalErrors(errors);
     }
   };
-
+  // @ts-ignore
   function getModifiedFields(obj1, obj2) {
     const modifiedFields = {};
 
     for (const key in obj2) {
       if (obj2.hasOwnProperty(key)) {
         if (obj2[key] !== obj1[key]) {
+          // @ts-ignore
           modifiedFields[key] = obj2[key];
         }
       }
@@ -149,7 +152,6 @@ const FormPersonalEdit: React.FC<FormPersonalEditProps> = ({
           error={localErrors.email}
         />
 
-       
         <Input
           id="nombre"
           label="Nombre"
@@ -224,13 +226,21 @@ const FormPersonalEdit: React.FC<FormPersonalEditProps> = ({
               placeholder="Confirmar Contraseña"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
+              // @ts-ignore
               error={localErrors.confirmPassword}
             />
-            {localErrors.passwordMismatch && (
-              <p className="text-red-500 col-span-1 md:col-span-2">
-                {localErrors.passwordMismatch}
-              </p>
-            )}
+
+            {
+              // @ts-ignore
+              localErrors.passwordMismatch && (
+                <p className="text-red-500 col-span-1 md:col-span-2">
+                  {
+                    // @ts-ignore
+                    localErrors.passwordMismatch
+                  }
+                </p>
+              )
+            }
           </>
         )}
 

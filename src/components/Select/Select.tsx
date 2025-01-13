@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
 
-// Definimos los tipos de las props para mayor claridad y seguridad de tipos
 interface SelectProps {
   id: string;
   label?: string;
@@ -24,7 +23,6 @@ const Select: React.FC<SelectProps> = ({
   disabled = false,
   error = false,
   helperText = "",
-  ...props
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [search, setSearch] = useState("");

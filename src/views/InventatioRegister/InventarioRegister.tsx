@@ -11,7 +11,8 @@ import ViewMore from "../../components/ViewMore/ViewMore";
 import type { InventarioItem } from "../../contexts/InventarioContext/interfaceInventario";
 import { LuClipboardEdit, LuFileText } from "react-icons/lu";
 import ButtonIcon from "../../components/ButtonIcon/ButtonIcon";
-import { parseFecha } from "../../services/parseFecha";
+// import { parseFecha } from "../../services/parseFecha";
+import { FaCheckCircle } from "react-icons/fa";
 
 const firstState: InventarioItem = {
   codigoProducto: "",
@@ -121,19 +122,17 @@ const InventarioRegister: React.FC = () => {
     key: keyof InventarioItem,
   ) => {
     switch (key) {
-      case "createdAt":
-        return parseFecha(InventarioItem[key]);
+      // case "createdAt":
+      //   return parseFecha(InventarioItem[key]);
+      case "transporte":
+        return `${InventarioItem.chofer} - ${InventarioItem.camion}`;
       case "estado":
         return (
-          <span
-            className={
-              InventarioItem[key] === "disponible"
-                ? "bg-green-500 text-white px-2 py-1 rounded"
-                : "bg-red-500 text-white px-2 py-1 rounded"
-            }
-          >
-            {InventarioItem[key]}
-          </span>
+          <FaCheckCircle
+            style={{
+              color: InventarioItem[key] === "Disponible" ? "green" : "red",
+            }}
+          />
         );
       default:
         return InventarioItem[key];

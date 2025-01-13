@@ -6,10 +6,13 @@ interface RowHeaderProps {
 
 const RowHeader: React.FC<RowHeaderProps> = ({ data }) => {
   return (
-    <tr className="text-xs font-semibold w-1 text-left bg-black text-white">
-      <th className="px-4 py-2">N°</th>
+    <tr className="text-xs font-bold text-left bg-gray-800 text-white">
+      <th className="px-4 py-3 text-center">#</th>
       {data.map((item, index) => (
-        <th key={index} className="px-4 py-2">
+        <th
+          key={index}
+          className="px-4 py-3 text-center border-l border-gray-700"
+        >
           {item}
         </th>
       ))}

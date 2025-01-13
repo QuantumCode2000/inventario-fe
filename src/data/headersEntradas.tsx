@@ -1,0 +1,31 @@
+// "id": 6,
+//         "item": "Producto Predeterminado",
+//         "codigo": "DEFAULT001",
+//         "cantidad": "50.00",
+//         "observaciones": "Entrada de prueba.",
+//         "registradoPor": "María López",
+//         "entregadoPor": null,
+//         "abastecidoPor": "Juan Pérez",
+//         "vehiculoEntrega": "Camión ABC-123",
+//         "chofer": "Pedro Gómez",
+//         "recibidoPor": null,
+//         "nroRemision": "REM-20250113",
+//         "motivo": "Reabastecimiento",
+//         "unidadMedida": "Unidades",
+//         "tipoEntrada": "abastecimiento",
+//         "createdAt": "2025-01-13T14:52:57.153Z",
+//         "updatedAt": "2025-01-13T14:52:57.153Z",
+//         "deletedAt": null
+
+export const headersEntradas = {
+  tabla: {
+    item: "Producto",
+    codigo: "Código",
+    cantidad: "Cantidad Ingresada",
+    motivo: "Motivo",
+    observaciones: "Observaciones",
+    createdAt: "Fecha de Registro",
+    tipoEntrada: "Tipo de Entrada",
+  },
+  verMas: {},
+};
