@@ -176,31 +176,34 @@ const InventarioRegister: React.FC = () => {
       </Content>
       <div className="flex justify-end mt-4">
         <Button
-          text={"Registrar Inventario"}
+          text={"Obtener Documentos"}
           onClick={openModal}
           textStyle={""}
         />
       </div>
       <Modal
-        title={isEdit ? "Editar Inventario" : "Registrar Inventario"}
+        title={isEdit ? "Editar Inventario" : "Obtener Documentos"}
         isOpen={isModalOpen}
         onClose={closeModal}
       >
         {error && <p className="text-red-500">{error}</p>} {/* Mostrar error */}
-        {isEdit ? (
-          <FormInventarioEdit
-            formData={formData}
-            formDataEdit={formDataEdit}
-            setModifiedData={setModifiedData}
-            handleChangeEdit={handleChangeEdit}
-            handleSubmit={handleSubmit}
-          />
-        ) : (
-          <FormInventarioRegister
-            formData={formData}
-            handleChange={handleChange}
-            handleSubmit={handleSubmit}
-          />
+        {isEdit ? // <FormInventarioEdit
+        //   formData={formData}
+        //   formDataEdit={formDataEdit}
+        //   setModifiedData={setModifiedData}
+        //   handleChangeEdit={handleChangeEdit}
+        //   handleSubmit={handleSubmit}
+        // />
+        null : (
+          // <FormInventarioRegister
+          //   formData={formData}
+          //   handleChange={handleChange}
+          //   handleSubmit={handleSubmit}
+          // />
+          <div>
+            Obtencion de Documentos no disponibles Regrese cuando se tenga la
+            informacion
+          </div>
         )}
       </Modal>
       {selectedItem && (
