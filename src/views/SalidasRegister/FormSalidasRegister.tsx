@@ -24,7 +24,7 @@ const FormSalidasRegister: React.FC<FormSalidasRegisterProps> = ({
   // Llamar a los items desde la API
   const getItems = async () => {
     try {
-      const response = await axios.get("http://localhost:3000/api/v1/items");
+      const response = await axios.get("http://54.234.14.21:3000/api/v1/items");
       setItems(response.data); // Guardamos los items completos
     } catch (error) {
       console.error("Error fetching items:", error);
@@ -178,7 +178,7 @@ const FormSalidasRegister: React.FC<FormSalidasRegisterProps> = ({
             <button
               className="bg-gray-300 text-black px-4 py-2 rounded mr-2"
               onClick={handleCloseModal}
-            > 
+            >
               Cancelar
             </button>
             <button
