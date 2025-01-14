@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Button from "../../components/Button/Button";
 import Table from "../../components/Table/Table";
 import { useInventario } from "../../contexts/InventarioContext/InventarioContext";
 import { headersInventario } from "../../data/headersInventatio";
 import Modal from "../../components/Modal/Modal";
 import FormInventarioRegister from "./FormInventarioRegister";
-import FormInventarioEdit from "./FormInventarioEdit";
+// import FormInventarioEdit from "./FormInventarioEdit";
 import Content from "../../components/Content/Content";
 import ViewMore from "../../components/ViewMore/ViewMore";
 import type { InventarioItem } from "../../contexts/InventarioContext/interfaceInventario";
@@ -13,31 +13,52 @@ import { LuClipboardEdit, LuFileText } from "react-icons/lu";
 import ButtonIcon from "../../components/ButtonIcon/ButtonIcon";
 // import { parseFecha } from "../../services/parseFecha";
 import { FaCheckCircle } from "react-icons/fa";
+import axios from "axios";
 
-const firstState: InventarioItem = {
-  codigoProducto: "",
+interface CreateItemDto {
+  nombre: string;
+  descripcion: string;
+  codigo: string;
+  categoria: string;
+  observaciones: string;
+  unidadMedida: string;
+}
+
+const firstState: CreateItemDto = {
+  nombre: "",
   descripcion: "",
+  codigo: "",
   categoria: "",
-  cantidadDisponible: "",
-  precioUnitario: "",
-  estado: "",
-  registradoPor: "",
-  chofer: "No Asignado",
-  camion: "No Asignado",
-  nroNotaRemision: "",
-  detalle: "",
+  observaciones: "",
+  unidadMedida: "",
 };
 
 const InventarioRegister: React.FC = () => {
   const [isModalOpen, setOpenModal] = useState<boolean>(false);
   const [isEdit, setIsEdit] = useState<boolean>(false);
   const [isViewMoreOpen, setViewMoreOpen] = useState<boolean>(false);
-  const [formData, setFormData] = useState<InventarioItem>(firstState);
-  const [formDataEdit, setFormDataEdit] = useState<InventarioItem>(firstState);
+  const [formData, setFormData] = useState<CreateItemDto>(firstState);
+  const [formDataEdit, setFormDataEdit] = useState<CreateItemDto>(firstState);
   const [selectedItem, setSelectedItem] = useState<InventarioItem | null>(null);
   const [error, setError] = useState<string | null>(null); // Manejo de errores
   const { Items, additem, updateitem } = useInventario();
   const [modifiedData, setModifiedData] = useState<Partial<InventarioItem>>({});
+  const [items, setItems] = useState<InventarioItem[]>([]);
+
+  const fetchItems = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:3000/api/v1/inventarios",
+      );
+      setItems(response.data);
+    } catch (error) {
+      console.error("Error fetching inventory items:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchItems();
+  }, []);
 
   const closeModal = () => {
     setOpenModal(false);
@@ -100,12 +121,14 @@ const InventarioRegister: React.FC = () => {
 
   const handleSubmit = async () => {
     console.log("Datos enviados al servidor:", formData); // Verifica los datos enviados
+
     try {
       if (isEdit) {
         await updateitem(modifiedData as InventarioItem);
       } else {
         console.log("erroror ");
         await additem(formData);
+        fetchItems();
       }
       closeModal();
     } catch (error) {
@@ -122,10 +145,6 @@ const InventarioRegister: React.FC = () => {
     key: keyof InventarioItem,
   ) => {
     switch (key) {
-      // case "createdAt":
-      //   return parseFecha(InventarioItem[key]);
-      case "transporte":
-        return `${InventarioItem.chofer} - ${InventarioItem.camion}`;
       case "estado":
         return (
           <FaCheckCircle
@@ -148,7 +167,7 @@ const InventarioRegister: React.FC = () => {
             acciones: "Acciones",
             createdAt: "Fecha de Registro",
           }}
-          body={Items}
+          body={items}
           renderCell={(
             InventarioItem: InventarioItem,
             key: keyof InventarioItem | "acciones",
@@ -163,11 +182,11 @@ const InventarioRegister: React.FC = () => {
                     onClick={() => handleViewMore(InventarioItem.id)}
                     textTooltip={"Ver más"}
                   />
-                  <ButtonIcon
+                  {/* <ButtonIcon
                     icon={<LuClipboardEdit />}
                     onClick={() => handleEdit(InventarioItem.id)}
                     textTooltip={"Editar"}
-                  />
+                  /> */}
                 </div>
               )}
             </div>
@@ -175,35 +194,21 @@ const InventarioRegister: React.FC = () => {
         />
       </Content>
       <div className="flex justify-end mt-4">
-        <Button
-          text={"Obtener Documentos"}
-          onClick={openModal}
-          textStyle={""}
-        />
+        {/* <Button text={"Registrar Item"} onClick={openModal} textStyle={""} /> */}
+        <Button text={"Registrar Item"} onClick={openModal} textStyle={""} />
       </div>
       <Modal
-        title={isEdit ? "Editar Inventario" : "Obtener Documentos"}
+        title={isEdit ? "Editar Inventario" : "Registrar Items"}
         isOpen={isModalOpen}
         onClose={closeModal}
       >
         {error && <p className="text-red-500">{error}</p>} {/* Mostrar error */}
-        {isEdit ? // <FormInventarioEdit
-        //   formData={formData}
-        //   formDataEdit={formDataEdit}
-        //   setModifiedData={setModifiedData}
-        //   handleChangeEdit={handleChangeEdit}
-        //   handleSubmit={handleSubmit}
-        // />
-        null : (
-          // <FormInventarioRegister
-          //   formData={formData}
-          //   handleChange={handleChange}
-          //   handleSubmit={handleSubmit}
-          // />
-          <div>
-            Obtencion de Documentos no disponibles Regrese cuando se tenga la
-            informacion
-          </div>
+        {isEdit ? null : ( // /> //   handleSubmit={handleSubmit} //   handleChangeEdit={handleChangeEdit} //   setModifiedData={setModifiedData} //   formDataEdit={formDataEdit} //   formData={formData} // <FormInventarioEdit
+          <FormInventarioRegister
+            formData={formData}
+            handleChange={handleChange}
+            handleSubmit={handleSubmit}
+          />
         )}
       </Modal>
       {selectedItem && (

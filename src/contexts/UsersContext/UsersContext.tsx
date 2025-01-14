@@ -19,9 +19,7 @@ const UsersProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   // Función para obtener todos los usuarios del backend
   const fetchUsers = async () => {
     try {
-      const response = await axios.get(
-        "http://54.221.108.114:3000/api/v1/usuarios",
-      );
+      const response = await axios.get("http://localhost:3000/api/v1/usuarios");
       setUsers(response.data);
     } catch (error) {
       console.error("Error fetching users:", error);
@@ -38,7 +36,7 @@ const UsersProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     console.log(user);
     try {
       const response = await axios.post(
-        "http://54.221.108.114:3000/api/v1/usuarios",
+        "http://localhost:3000/api/v1/usuarios",
         user,
       );
       setUsers((prevUsers) => [...prevUsers, response.data]);
@@ -56,7 +54,7 @@ const UsersProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
         throw new Error("User not found");
       }
       await axios.delete(
-        `http://54.221.108.114:3000/api/v1/usuarios/${userToRemove.id}`,
+        `http://localhost:3000/api/v1/usuarios/${userToRemove.id}`,
       );
       setUsers((prevUsers) => prevUsers.filter((user) => user.ci !== ci));
     } catch (error) {
@@ -70,7 +68,7 @@ const UsersProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     const { id, ...rest } = updatedUser;
     try {
       const response = await axios.patch(
-        `http://54.221.108.114:3000/api/v1/usuarios/${id}`,
+        `http://localhost:3000/api/v1/usuarios/${id}`,
         rest,
       );
       setUsers((prevUsers) =>

@@ -1,11 +1,10 @@
-
 export const headersInventario = {
   tabla: {
     item: "Producto",
     codigo: "Código",
     cantidad: "Cantidad",
     localizacion: "Localización",
-    ubicacion: "Ubicación",
+    // ubicacion: "Ubicación",
     createdAt: "Fecha de Registro",
   },
   verMas: {
@@ -13,7 +12,7 @@ export const headersInventario = {
     codigo: "Código",
     cantidad: "Cantidad",
     localizacion: "Localización",
-    ubicacion: "Ubicación",
+    // ubicacion: "Ubicación",
     createdAt: "Fecha de Registro",
   },
 };
