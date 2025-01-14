@@ -23,10 +23,10 @@
 //   const [tipoEntrada, setTipoEntrada] = useState("abastecimiento"); // Por defecto, tipo de entrada 'abastecimiento'
 //   const [items, setItems] = useState<any[]>([]);
 
-//   // Llamar items de la base de datos desde la ruta http://54.165.144.243:3000/api/v1/items GET
+//   // Llamar items de la base de datos desde la ruta http://54.221.108.114:3000/api/v1/items GET
 //   const getItems = async () => {
 //     try {
-//       const response = await axios.get("http://54.165.144.243:3000/api/v1/items");
+//       const response = await axios.get("http://54.221.108.114:3000/api/v1/items");
 //       setItems(response.data); // Guardamos los items completos
 //     } catch (error) {
 //       console.error("Error fetching items:", error);
