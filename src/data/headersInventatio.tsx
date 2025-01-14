@@ -4,6 +4,7 @@ export const headersInventario = {
     codigo: "Código",
     cantidad: "Cantidad",
     localizacion: "Localización",
+    unidadMedida: "Unidad de Medida",
     // ubicacion: "Ubicación",
     createdAt: "Fecha de Registro",
     descripcion: "Descripción",
