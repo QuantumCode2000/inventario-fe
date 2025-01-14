@@ -70,7 +70,7 @@ const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const login = async (email: string, password: string): Promise<boolean> => {
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/v1/auth/login",
+        "http://54.221.108.114:3000/api/v1/auth/login",
         {
           email,
           password,
