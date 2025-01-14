@@ -21,8 +21,8 @@ const firstState: User = {
   email: "",
   password: "",
   cargo: "",
-  rol: "administrador", // Valor predeterminado
-  estado: "activo", // Valor predeterminado
+  rol: "Usuario",
+  estado: "Activo",
 };
 
 const PersonalRegister: React.FC = () => {
@@ -94,11 +94,11 @@ const PersonalRegister: React.FC = () => {
   const handleSubmit = async () => {
     try {
       if (isEdit) {
-        await updateUser(modifiedData as User); // Aquí se incluye la nueva contraseña si se cambió
+        await updateUser(modifiedData as User);
       } else {
         await addUser({
           ...formData,
-          password: formData.ci, // Se puede inicializar la contraseña con el CI
+          password: formData.ci,
         });
       }
       closeModal();
@@ -113,25 +113,17 @@ const PersonalRegister: React.FC = () => {
 
   const renderCell = (item: User, key: keyof User) => {
     switch (key) {
-      // case "inSystemPermissions":
-      //   return (
-      //     <span
-      //       className={
-      //         item[key] === "Sí"
-      //           ? "bg-green-500 text-white px-2 py-1 rounded"
-      //           : "bg-red-500 text-white px-2 py-1 rounded"
-      //       }
-      //     >
-      //       {item[key]}
-      //     </span>
-      //   );
+      case "nombre":
+        return `${item.nombre} ${item.apellidoPaterno} ${item.apellidoMaterno}`;
+      case "ci":
+        return `${item.ci} ${item.extension}`;
       case "estado":
         return (
           <span
             className={
-              item[key] === "Activo"
-                ? "bg-green-500 text-white px-2 py-1 rounded"
-                : "bg-red-500 text-white px-2 py-1 rounded"
+              item[key] === "activo"
+                ? "bg-green-500 text-white px-2 py-1 rounded uppercase"
+                : "bg-red-500 text-white px-2 py-1 rounded uppercase"
             }
           >
             {item[key]}
@@ -141,11 +133,11 @@ const PersonalRegister: React.FC = () => {
         return (
           <span
             className={
-              item[key] === "Administrador"
-                ? "bg-blue-500 text-white px-2 py-1 rounded"
+              item[key] === "administrador"
+                ? "bg-blue-500 text-white px-2 py-1 rounded uppercase"
                 : item[key] === "Encargado"
-                ? "bg-green-500 text-white px-2 py-1 rounded"
-                : "bg-yellow-500 text-white px-2 py-1 rounded"
+                ? "bg-green-500 text-white px-2 py-1 rounded uppercase"
+                : "bg-yellow-500 text-white px-2 py-1 rounded uppercase"
             }
           >
             {item[key]}
@@ -156,31 +148,69 @@ const PersonalRegister: React.FC = () => {
     }
   };
 
+  function isUser(item: unknown): item is User {
+    return typeof item === "object" && item !== null && "ci" in item;
+  }
+
   return (
     <>
       <Content>
+       
+
         <Table
-          header={{ ...headersUsers.tabla, acciones: "Acciones" }}
+          header={{
+            ...headersUsers.tabla,
+            acciones: "Acciones",
+            // opciones: "Opciones",
+          }}
           body={users}
-          renderCell={(item: User, key: keyof User | "acciones") => (
-            <div>
-              {key !== "acciones" && renderCell(item, key as keyof User)}
-              {key === "acciones" && (
-                <div className="flex gap-2">
-                  <ButtonIcon
-                    icon={<LuFileText />}
-                    onClick={() => handleViewMore(item.ci)}
-                    textTooltip={"Ver más"}
-                  />
-                  <ButtonIcon
-                    icon={<LuClipboardEdit />}
-                    onClick={() => handleEdit(item.ci)}
-                    textTooltip={"Editar"}
-                  />
+          renderCell={(item, key) => {
+            // Type guard para asegurarte de que item es un User
+            if (isUser(item)) {
+              return (
+                <div>
+                  {key !== "acciones" &&
+                    key !== "opciones" &&
+                    renderCell(item, key as keyof User)}
+                  {key === "acciones" && (
+                    <div className="flex gap-2">
+                      <ButtonIcon
+                        icon={<LuFileText />}
+                        onClick={() => handleViewMore(item.ci)}
+                        textTooltip={"Ver más"}
+                      />
+                      <ButtonIcon
+                        icon={<LuClipboardEdit />}
+                        onClick={() => handleEdit(item.ci)}
+                        textTooltip={"Editar"}
+                      />
+                    </div>
+                  )}
+                  {/* {key === "opciones" && (
+                    <div className="flex gap-2">
+                      <ButtonIcon
+                        icon={<LuFileText />}
+                        onClick={() =>
+                          console.log("Opción 1 seleccionada", item)
+                        }
+                        textTooltip={"Opción 1"}
+                      />
+                      <ButtonIcon
+                        icon={<LuClipboardEdit />}
+                        onClick={() =>
+                          console.log("Opción 2 seleccionada", item)
+                        }
+                        textTooltip={"Opción 2"}
+                      />
+                    </div>
+                  )} */}
                 </div>
-              )}
-            </div>
-          )}
+              );
+            }
+
+            // Renderizar una celda vacía si el tipo no es válido
+            return <span>-</span>;
+          }}
         />
       </Content>
       <div className="flex justify-end mt-4">
@@ -195,15 +225,16 @@ const PersonalRegister: React.FC = () => {
         isOpen={isModalOpen}
         onClose={closeModal}
       >
-        {error && <p className="text-red-500">{error}</p>} {/* Mostrar error */}
-        {isEdit ? // <FormPersonalEdit
-        //   formData={formData}
-        //   formDataEdit={formDataEdit}
-        //   setModifiedData={setModifiedData}
-        //   handleChangeEdit={handleChangeEdit}
-        //   handleSubmit={handleSubmit}
-        // />
-        null : (
+        {error && <p className="text-red-500">{error}</p>}
+        {isEdit ? (
+          <FormPersonalEdit
+            formData={formData}
+            formDataEdit={formDataEdit}
+            setModifiedData={setModifiedData}
+            handleChangeEdit={handleChangeEdit}
+            handleSubmit={handleSubmit}
+          />
+        ) : (
           <FormPersonalRegister
             formData={formData}
             handleChange={handleChange}

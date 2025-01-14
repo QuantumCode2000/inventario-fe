@@ -3,12 +3,11 @@ interface InputProps {
   label?: string;
   type?: string;
   placeholder?: string;
-  value: string;
+  value: string | number | undefined;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   disabled?: boolean;
-  error?: boolean | string;
+  error?: boolean | string | undefined | number;
   helperText?: string;
-  [key: string]: any;
 }
 
 const Input: React.FC<InputProps> = ({

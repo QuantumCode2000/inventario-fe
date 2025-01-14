@@ -1,33 +1,36 @@
-// import React from "react";
-
-// interface RowsProps {
-//   data: {
-//     body: Array<{ [key: string]: any }>;
-//     header: string[];
-//   };
-//   renderCell?: (
-//     item: { [key: string]: any },
-//     key: string,
-//     rowIndex: number,
-//   ) => JSX.Element;
+// interface RowData {
+//   [key: string]: unknown;
 // }
 
-// const Rows: React.FC<RowsProps> = ({ data, renderCell }) => {
+// interface RowsProps<T extends RowData> {
+//   data: {
+//     body: T[];
+//     header: string[];
+//   };
+//   renderCell?: (item: T, key: string, rowIndex: number) => JSX.Element;
+// }
+
+// const Rows = <T extends RowData>({ data, renderCell }: RowsProps<T>) => {
 //   const { body, header } = data;
 
 //   return (
 //     <>
 //       {body.map((item, rowIndex) => (
-//         <tr key={rowIndex} className="bg-white text-gray-900 even:bg-gray-100">
-//           <td className="px-4 py-2 w-1 text-xs border-b border-gray-300">
+//         <tr
+//           key={rowIndex}
+//           className={`text-xs text-gray-800 ${
+//             rowIndex % 2 === 0 ? "bg-gray-100" : "bg-white"
+//           } hover:bg-gray-200 transition-colors`}
+//         >
+//           <td className="px-4 py-3 text-center border-b border-gray-300">
 //             {rowIndex + 1}
 //           </td>
 //           {header.map((key, colIndex) => (
 //             <td
 //               key={colIndex}
-//               className="px-4 py-2 w-1 text-xs border-b border-gray-300"
+//               className="px-4 py-3 text-center border-b border-gray-300"
 //             >
-//               {renderCell ? renderCell(item, key, rowIndex) : item[key]}
+//               {renderCell ? renderCell(item, key, rowIndex) : String(item[key])}
 //             </td>
 //           ))}
 //         </tr>
@@ -39,19 +42,23 @@
 // export default Rows;
 import React from "react";
 
-interface RowsProps {
+interface RowData {
+  [key: string]: string | number | boolean | null | undefined;
+}
+
+interface RowsProps<T extends RowData> {
   data: {
-    body: Array<{ [key: string]: any }>;
-    header: string[];
+    body: T[];
+    header: (keyof T | "acciones")[];
   };
   renderCell?: (
-    item: { [key: string]: any },
-    key: string,
+    item: T,
+    key: keyof T | "acciones",
     rowIndex: number,
   ) => JSX.Element;
 }
 
-const Rows: React.FC<RowsProps> = ({ data, renderCell }) => {
+const Rows = <T extends RowData>({ data, renderCell }: RowsProps<T>) => {
   const { body, header } = data;
 
   return (
@@ -71,7 +78,9 @@ const Rows: React.FC<RowsProps> = ({ data, renderCell }) => {
               key={colIndex}
               className="px-4 py-3 text-center border-b border-gray-300"
             >
-              {renderCell ? renderCell(item, key, rowIndex) : item[key]}
+              {renderCell
+                ? renderCell(item, key as keyof T | "acciones", rowIndex)
+                : String(item[key])}
             </td>
           ))}
         </tr>

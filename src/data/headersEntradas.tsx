@@ -6,7 +6,7 @@ export const headersEntradas = {
     motivo: "Motivo",
     observaciones: "Observaciones",
     createdAt: "Fecha de Registro",
-    tipoEntrada: "Tipo de Entrada",
+    // tipoEntrada: "Tipo de Entrada",
   },
   verMas: {},
 };

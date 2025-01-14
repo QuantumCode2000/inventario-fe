@@ -141,13 +141,20 @@ const FormEntradasRegister: React.FC<FormEntradasRegisterProps> = ({
           onChange={handleChange}
           error={localErrors.observaciones}
         />
-        <Select
+        <Input
+          id="motivo"
+          label="Motivo"
+          value={formData.motivo}
+          onChange={handleChange}
+          error={localErrors.motivo}
+        />
+        {/* <Select
           id="motivo"
           label="Motivo"
           options={["Reabastecimiento", "Devolución"]}
           value={formData.motivo}
           onChange={handleChange}
-        />
+        /> */}
         <Select
           id="tipoEntrada"
           label="Tipo de Entrada"

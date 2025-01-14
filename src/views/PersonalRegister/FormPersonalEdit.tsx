@@ -4,10 +4,15 @@ import Select from "../../components/Select/Select";
 import Modal from "../../components/Modal/Modal";
 import { departamentos } from "../../data/selectOptions";
 import { User } from "../../contexts/UsersContext/interfaces";
+import { getModifiedFields } from "../../services/getModifiedFields";
 
-const roles = ["Administrador", "Encargado", "Personal"];
-const estados = ["Activo", "Inactivo"];
-const inSystemPermissions = ["Sí", "No"];
+const roles = ["administrador", "usuario"];
+const estados = ["activo", "inactivo"];
+const cargos = [
+  "Jefe de Almacén",
+  "Ayudante de Jefe de Almacén",
+  "Administrador de Sistema",
+];
 
 interface FormPersonalEditProps {
   formData: User;
@@ -15,7 +20,7 @@ interface FormPersonalEditProps {
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => void;
   handleSubmit: () => void;
-  handlePasswordChange: (newPassword: string) => void;
+  // handlePasswordChange: (newPassword: string) => void;
   formDataEdit: User;
   setModifiedData: (data: Partial<User>) => void;
 }
@@ -29,10 +34,10 @@ const FormPersonalEdit: React.FC<FormPersonalEditProps> = ({
 }) => {
   const [isConfirmModalOpen, setConfirmModalOpen] = useState(false);
   const [localErrors, setLocalErrors] = useState<Partial<User>>({});
-  const [showPasswordFields, setShowPasswordFields] = useState(false);
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
   const [noChangesError, setNoChangesError] = useState<string | null>(null); // Para manejar errores de no cambios
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPasswordFields, setShowPasswordFields] = useState(false);
 
   const validateForm = () => {
     const newErrors: Partial<User> = {};
@@ -48,11 +53,8 @@ const FormPersonalEdit: React.FC<FormPersonalEditProps> = ({
     if (showPasswordFields) {
       if (!password) newErrors.password = "Nueva contraseña es requerida";
       if (!confirmPassword)
-        // Ignorar el error del lint de typescript
-        // @ts-ignore Inicializar el error de confirmar contraseña
         newErrors.confirmPassword = "Confirmar contraseña es requerido";
       if (password !== confirmPassword)
-        // @ts-ignore Inicializar el error de contraseña no coinciden
         newErrors.passwordMismatch = "Las contraseñas no coinciden";
     }
 
@@ -66,7 +68,6 @@ const FormPersonalEdit: React.FC<FormPersonalEditProps> = ({
 
     if (Object.keys(errors).length === 0) {
       if (Object.keys(modifiedFields).length === 0 && !showPasswordFields) {
-        // Si no hay cambios y no se está modificando la contraseña
         setNoChangesError("No se ha modificado ningún campo.");
       } else {
         setConfirmModalOpen(true);
@@ -88,21 +89,6 @@ const FormPersonalEdit: React.FC<FormPersonalEditProps> = ({
       setLocalErrors(errors);
     }
   };
-  // @ts-ignore
-  function getModifiedFields(obj1, obj2) {
-    const modifiedFields = {};
-
-    for (const key in obj2) {
-      if (obj2.hasOwnProperty(key)) {
-        if (obj2[key] !== obj1[key]) {
-          // @ts-ignore
-          modifiedFields[key] = obj2[key];
-        }
-      }
-    }
-
-    return modifiedFields;
-  }
 
   const handleConfirmSubmit = () => {
     setConfirmModalOpen(false);
@@ -177,10 +163,10 @@ const FormPersonalEdit: React.FC<FormPersonalEditProps> = ({
           error={localErrors.apellidoMaterno}
         />
         <Select
-          id="inSystemPermissions"
-          label="Permiso en Sistema"
-          options={inSystemPermissions}
-          value={formDataEdit.inSystemPermissions}
+          id="cargo"
+          label="Cargo"
+          options={cargos}
+          value={formDataEdit.cargo}
           onChange={handleChangeEdit}
         />
         <Select
@@ -226,21 +212,14 @@ const FormPersonalEdit: React.FC<FormPersonalEditProps> = ({
               placeholder="Confirmar Contraseña"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
-              // @ts-ignore
-              error={localErrors.confirmPassword}
+              // error={localErrors.confirmPassword}
             />
 
-            {
-              // @ts-ignore
-              localErrors.passwordMismatch && (
-                <p className="text-red-500 col-span-1 md:col-span-2">
-                  {
-                    // @ts-ignore
-                    localErrors.passwordMismatch
-                  }
-                </p>
-              )
-            }
+            {localErrors.passwordMismatch && (
+              <p className="text-red-500 col-span-1 md:col-span-2">
+                {localErrors.passwordMismatch}
+              </p>
+            )}
           </>
         )}
 

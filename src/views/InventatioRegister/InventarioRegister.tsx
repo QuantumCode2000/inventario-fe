@@ -5,26 +5,18 @@ import { useInventario } from "../../contexts/InventarioContext/InventarioContex
 import { headersInventario } from "../../data/headersInventatio";
 import Modal from "../../components/Modal/Modal";
 import FormInventarioRegister from "./FormInventarioRegister";
-// import FormInventarioEdit from "./FormInventarioEdit";
+import FormInventarioEdit from "./FormInventarioEdit";
 import Content from "../../components/Content/Content";
 import ViewMore from "../../components/ViewMore/ViewMore";
-import type { InventarioItem } from "../../contexts/InventarioContext/interfaceInventario";
+import type {
+  InventarioItem,
+  Item,
+} from "../../contexts/InventarioContext/interfaceInventario";
 import { LuClipboardEdit, LuFileText } from "react-icons/lu";
 import ButtonIcon from "../../components/ButtonIcon/ButtonIcon";
-// import { parseFecha } from "../../services/parseFecha";
-import { FaCheckCircle } from "react-icons/fa";
 import axios from "axios";
 
-interface CreateItemDto {
-  nombre: string;
-  descripcion: string;
-  codigo: string;
-  categoria: string;
-  observaciones: string;
-  unidadMedida: string;
-}
-
-const firstState: CreateItemDto = {
+const initialStateItem: Item = {
   nombre: "",
   descripcion: "",
   codigo: "",
@@ -33,12 +25,25 @@ const firstState: CreateItemDto = {
   unidadMedida: "",
 };
 
+const firstStateInvetario: InventarioItem = {
+  item: "",
+  codigo: "",
+  cantidad: 0,
+  localizacion: "",
+  ubicacion: "",
+  descripcion: "",
+  unidadMedida: "",
+};
+
 const InventarioRegister: React.FC = () => {
   const [isModalOpen, setOpenModal] = useState<boolean>(false);
   const [isEdit, setIsEdit] = useState<boolean>(false);
   const [isViewMoreOpen, setViewMoreOpen] = useState<boolean>(false);
-  const [formData, setFormData] = useState<CreateItemDto>(firstState);
-  const [formDataEdit, setFormDataEdit] = useState<CreateItemDto>(firstState);
+  const [newItemData, setNewItemData] = useState<Item>(initialStateItem);
+  const [formData, setFormData] = useState<InventarioItem>(firstStateInvetario);
+
+  const [formDataEdit, setFormDataEdit] =
+    useState<InventarioItem>(firstStateInvetario);
   const [selectedItem, setSelectedItem] = useState<InventarioItem | null>(null);
   const [error, setError] = useState<string | null>(null); // Manejo de errores
   const { Items, additem, updateitem } = useInventario();
@@ -64,7 +69,8 @@ const InventarioRegister: React.FC = () => {
   const closeModal = () => {
     setOpenModal(false);
     setIsEdit(false);
-    setFormData(firstState);
+    setFormData(firstStateInvetario);
+    setNewItemData(initialStateItem);
   };
 
   const closeViewMoreModal = () => {
@@ -75,7 +81,8 @@ const InventarioRegister: React.FC = () => {
   const openModal = () => {
     setOpenModal(true);
     setIsEdit(false);
-    setFormData(firstState);
+    setFormData(firstStateInvetario);
+    setNewItemData(initialStateItem);
   };
 
   const handleViewMore = (id: string) => {
@@ -114,21 +121,20 @@ const InventarioRegister: React.FC = () => {
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
     const { id, value } = e.target;
-    setFormData((prevData) => ({
+    setNewItemData((prevData) => ({
       ...prevData,
       [id]: value,
     }));
   };
 
   const handleSubmit = async () => {
-    console.log("Datos enviados al servidor:", formData); // Verifica los datos enviados
-
     try {
       if (isEdit) {
         await updateitem(modifiedData as InventarioItem);
+        fetchItems();
       } else {
         console.log("erroror ");
-        await additem(formData);
+        await additem(newItemData);
         fetchItems();
       }
       closeModal();
@@ -146,14 +152,6 @@ const InventarioRegister: React.FC = () => {
     key: keyof InventarioItem,
   ) => {
     switch (key) {
-      case "estado":
-        return (
-          <FaCheckCircle
-            style={{
-              color: InventarioItem[key] === "Disponible" ? "green" : "red",
-            }}
-          />
-        );
       default:
         return InventarioItem[key];
     }
@@ -183,11 +181,11 @@ const InventarioRegister: React.FC = () => {
                     onClick={() => handleViewMore(InventarioItem.id)}
                     textTooltip={"Ver más"}
                   />
-                  {/* <ButtonIcon
+                  <ButtonIcon
                     icon={<LuClipboardEdit />}
                     onClick={() => handleEdit(InventarioItem.id)}
                     textTooltip={"Editar"}
-                  /> */}
+                  />
                 </div>
               )}
             </div>
@@ -204,9 +202,17 @@ const InventarioRegister: React.FC = () => {
         onClose={closeModal}
       >
         {error && <p className="text-red-500">{error}</p>} {/* Mostrar error */}
-        {isEdit ? null : ( // /> //   handleSubmit={handleSubmit} //   handleChangeEdit={handleChangeEdit} //   setModifiedData={setModifiedData} //   formDataEdit={formDataEdit} //   formData={formData} // <FormInventarioEdit
-          <FormInventarioRegister
+        {isEdit ? (
+          <FormInventarioEdit
             formData={formData}
+            formDataEdit={formDataEdit}
+            setModifiedData={setModifiedData}
+            handleChangeEdit={handleChangeEdit}
+            handleSubmit={handleSubmit}
+          />
+        ) : (
+          <FormInventarioRegister
+            formData={newItemData}
             handleChange={handleChange}
             handleSubmit={handleSubmit}
           />

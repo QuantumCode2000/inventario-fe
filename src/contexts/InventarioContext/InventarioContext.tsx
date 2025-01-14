@@ -9,6 +9,7 @@ import axios from "axios";
 import type {
   InventarioItem,
   InventarioContextProps,
+  Item,
 } from "./interfaceInventario";
 
 const InventarioContext = createContext<InventarioContextProps | undefined>(
@@ -37,12 +38,13 @@ const InventarioProvider: React.FC<{ children: ReactNode }> = ({
   }, []);
 
   // Función para agregar un nuevo ítem al inventario
-  const additem = async (InventarioItem: InventarioItem) => {
+  const additem = async (newItem: Item) => {
+    newItem.cantidad = Number(newItem.cantidad);
     try {
-      console.log("Datos enviados al servidor:", InventarioItem);
+      console.log("Datos enviados al servidor:", newItem);
       const response = await axios.post(
         "http://54.221.108.114:3000/api/v1/items",
-        InventarioItem,
+        newItem,
       );
       setItems((prevItems) => [...prevItems, response.data]);
     } catch (error) {
@@ -53,7 +55,7 @@ const InventarioProvider: React.FC<{ children: ReactNode }> = ({
       } else {
         console.error("Error inesperado:", error);
       }
-      throw error.response?.data.message;
+      throw new Error("Error adding inventory item");
       //console.error("Error adding inventory item:", error);
       // throw new Error("Error adding inventory item");
     }
@@ -85,6 +87,12 @@ const InventarioProvider: React.FC<{ children: ReactNode }> = ({
   // Función para actualizar un ítem del inventario
   const updateitem = async (updatedItem: Partial<InventarioItem>) => {
     const { id, ...rest } = updatedItem;
+    // si el rest es cantidad debe verificar que lo este mandando como numero
+    if (rest.cantidad) {
+      rest.cantidad = Number(rest.cantidad);
+    }
+    console.log("Datos enviados al servidor:", rest);
+    console.log("Datos enviados al servidor:", id);
     try {
       const response = await axios.patch(
         `http://54.221.108.114:3000/api/v1/inventarios/${id}`,

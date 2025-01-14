@@ -1,24 +1,42 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Rows from "./Rows";
 import RowHeader from "./RowHeader";
 import CustomFilter from "../CustomFilter/CustomFilter";
 import Pagination from "./Pagination";
 
-interface TableProps {
-  header: { [key: string]: string };
-  body: Array<{ [key: string]: any }>;
-  data: { [key: string]: string }[];
-  renderCell: (value: any, key: string, rowIndex: number) => JSX.Element;
+interface Column {
+  key: string;
+  label: string;
 }
 
-const Table: React.FC<TableProps> = ({ header, body, renderCell }) => {
-  const [selectedColumn, setSelectedColumn] = useState(Object.keys(header)[0]);
+interface RowData {
+  [key: string]: string | number | boolean | null | undefined;
+}
+
+interface TableProps<T extends Record<string, unknown>> {
+  header: { [key: string]: string };
+  body: T[];
+  renderCell: (
+    item: T | Record<string, unknown>,
+    key: keyof T | string,
+    rowIndex: number,
+  ) => JSX.Element;
+}
+
+const Table = <T extends RowData>({
+  header,
+  body,
+  renderCell,
+}: TableProps<T>) => {
+  const [selectedColumn, setSelectedColumn] = useState<string>(
+    Object.keys(header)[0],
+  );
   const [filterText, setFilterText] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10;
+  const itemsPerPage = 15;
 
   const headerValues = Object.values(header);
-  const headerKeys = Object.keys(header);
+  const headerKeys = Object.keys(header) as (keyof T | "acciones")[];
 
   const handleFilterChange = (text: string) => {
     setFilterText(text);
@@ -45,9 +63,9 @@ const Table: React.FC<TableProps> = ({ header, body, renderCell }) => {
     currentPage * itemsPerPage,
   );
 
-  const columns = headerKeys.map((key) => ({
-    key,
-    label: header[key],
+  const columns: Column[] = headerKeys.map((key) => ({
+    key: key.toString(),
+    label: header[key as string],
   }));
 
   return (

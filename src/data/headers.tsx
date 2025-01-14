@@ -1,10 +1,11 @@
 const headersUsers = {
   tabla: {
     ci: "Carnet de Identidad",
-    extension: "Ex.",
+    // extension: "Ex.",
     nombre: "Nombre",
-    apellidoPaterno: "Apellido Paterno",
-    apellidoMaterno: "Apellido Materno",
+    // apellidoPaterno: "Apellido Paterno",
+    // apellidoMaterno: "Apellido Materno",
+    cargo: "Cargo",
     email: "Correo",
     rol: "Rol",
     estado: "Estado",
