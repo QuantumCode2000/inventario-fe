@@ -6,6 +6,7 @@ export const headersInventario = {
     localizacion: "Localización",
     // ubicacion: "Ubicación",
     createdAt: "Fecha de Registro",
+    descripcion: "Descripción",
   },
   verMas: {
     item: "Producto",
