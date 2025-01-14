@@ -1,20 +1,20 @@
-# version: "3.8"
-# services:
-#   frontend:
-#     build: .
-#     ports:
-#       - "5173:5173"
-#     volumes:
-#       - .:/app
-#       - /app/node_modules
-#     command: npm run dev
 version: "3.8"
 services:
   frontend:
     build: .
     ports:
-      - "80:80" # Mapea el puerto 80 del contenedor al 80 del host
+      - "5173:5173"
     volumes:
-      - .:/app # Monta tu proyecto local en /app
-      - /app/node_modules # Evita conflictos de node_modules
+      - .:/app
+      - /app/node_modules
     command: npm run dev
+# version: "3.8"
+# services:
+#   frontend:
+#     build: .
+#     ports:
+#       - "80:80" # Mapea el puerto 80 del contenedor al 80 del host
+#     volumes:
+#       - .:/app # Monta tu proyecto local en /app
+#       - /app/node_modules # Evita conflictos de node_modules
+#     command: npm run dev
