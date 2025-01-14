@@ -25,7 +25,7 @@ const FormSalidasRegister: React.FC<FormSalidasRegisterProps> = ({
   const getItems = async () => {
     try {
       const response = await axios.get(
-        "http://54.234.14.21:3000/api/v1/inventarios",
+        "http://54.165.144.243:3000/api/v1/inventarios",
       );
       setItems(response.data); // Guardamos los items completos
     } catch (error) {

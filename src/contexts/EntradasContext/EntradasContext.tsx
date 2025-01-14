@@ -22,7 +22,7 @@ const EntradasProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const fetchEntradas = async () => {
     try {
       const response = await axios.get(
-        "http://54.234.14.21:3000/api/v1/entradas",
+        "http://54.165.144.243:3000/api/v1/entradas",
       );
       setEntradas(response.data);
     } catch (error) {
@@ -39,7 +39,7 @@ const EntradasProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const addEntrada = async (entrada: Entrada) => {
     try {
       const response = await axios.post(
-        "http://54.234.14.21:3000/api/v1/entradas",
+        "http://54.165.144.243:3000/api/v1/entradas",
         entrada,
       );
       setEntradas((prevEntradas) => [...prevEntradas, response.data]);
@@ -52,7 +52,7 @@ const EntradasProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   // Función para eliminar una entrada por ID
   const removeEntrada = async (id: string) => {
     try {
-      await axios.delete(`http://54.234.14.21:3000/api/v1/entradas/${id}`);
+      await axios.delete(`http://54.165.144.243:3000/api/v1/entradas/${id}`);
       setEntradas((prevEntradas) =>
         prevEntradas.filter((entrada) => entrada.id !== id),
       );
@@ -67,7 +67,7 @@ const EntradasProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     const { id, ...rest } = updatedEntrada;
     try {
       const response = await axios.patch(
-        `http://54.234.14.21:3000/api/v1/entradas/${id}`,
+        `http://54.165.144.243:3000/api/v1/entradas/${id}`,
         rest,
       );
       setEntradas((prevEntradas) =>

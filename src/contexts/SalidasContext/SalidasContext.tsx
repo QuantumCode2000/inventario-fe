@@ -22,7 +22,7 @@ const SalidasProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const fetchSalidas = async () => {
     try {
       const response = await axios.get(
-        "http://54.234.14.21:3000/api/v1/salidas",
+        "http://54.165.144.243:3000/api/v1/salidas",
       );
       setSalidas(response.data);
     } catch (error) {
@@ -39,7 +39,7 @@ const SalidasProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const addSalida = async (salida: Salida) => {
     try {
       const response = await axios.post(
-        "http://54.234.14.21:3000/api/v1/salidas",
+        "http://54.165.144.243:3000/api/v1/salidas",
         salida,
       );
       setSalidas((prevSalidas) => [...prevSalidas, response.data]);
@@ -52,7 +52,7 @@ const SalidasProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   // Función para eliminar una salida por ID
   const removeSalida = async (id: string) => {
     try {
-      await axios.delete(`http://54.234.14.21:3000/api/v1/salidas/${id}`);
+      await axios.delete(`http://54.165.144.243:3000/api/v1/salidas/${id}`);
       setSalidas((prevSalidas) =>
         prevSalidas.filter((salida) => salida.id !== id),
       );
@@ -67,7 +67,7 @@ const SalidasProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     const { id, ...rest } = updatedSalida;
     try {
       const response = await axios.patch(
-        `http://54.234.14.21:3000/api/v1/salidas/${id}`,
+        `http://54.165.144.243:3000/api/v1/salidas/${id}`,
         rest,
       );
       setSalidas((prevSalidas) =>
