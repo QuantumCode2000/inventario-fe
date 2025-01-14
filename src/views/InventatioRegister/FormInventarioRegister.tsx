@@ -67,6 +67,7 @@ const FormInventarioRegister: React.FC<FormInventarioRegisterProps> = ({
           value={formData.codigo}
           onChange={handleChange}
           error={localErrors.codigo}
+          disabled={true}
         />
         <Input
           type="number"

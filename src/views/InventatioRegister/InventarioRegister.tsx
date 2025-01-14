@@ -49,11 +49,18 @@ const InventarioRegister: React.FC = () => {
   const { Items, additem, updateitem } = useInventario();
   const [modifiedData, setModifiedData] = useState<Partial<InventarioItem>>({});
   const [items, setItems] = useState<InventarioItem[]>([]);
+  const { Item } = useInventario();
 
+  const generateCode = () => {
+    const codeTag = "ITEM";
+    const currentQuantity = Items.length + 1;
+    const code = `${codeTag}${currentQuantity}`;
+    return code;
+  };
   const fetchItems = async () => {
     try {
       const response = await axios.get(
-        "http://54.221.108.114:3000/api/v1/inventarios",
+        "http://localhost:3000/api/v1/inventarios",
       );
       setItems(response.data);
       console.log("Items de inventario", response.data);
@@ -212,7 +219,12 @@ const InventarioRegister: React.FC = () => {
           />
         ) : (
           <FormInventarioRegister
-            formData={newItemData}
+            formData={
+              {
+                ...newItemData,
+                codigo: generateCode(),
+              } as Item
+            }
             handleChange={handleChange}
             handleSubmit={handleSubmit}
           />
