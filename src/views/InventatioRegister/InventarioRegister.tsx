@@ -69,7 +69,7 @@ const InventarioRegister: React.FC = () => {
   const fetchItems = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:3000/api/v1/inventarios",
+        "http://54.221.108.114:3000/api/v1/inventarios",
       );
       setItems(response.data);
       console.log("Items de inventario", response.data);
