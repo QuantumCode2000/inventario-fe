@@ -15,52 +15,6 @@ interface OptionGroup {
   options: Option[];
 }
 
-const optionsGeneration = (unidad: string): OptionGroup[] => {
-  return [
-    {
-      text: "Ganado Bovino",
-      options: [
-        {
-          to: `/inventario/bovino/${unidad}`,
-          icon: <MdOutlineInventory />,
-          text: "Inventario",
-        },
-        {
-          to: `/parte-inmediato/bovino/${unidad}`,
-          icon: <CgNotes />,
-          text: "Parte Inmediato",
-        },
-        {
-          to: `parte-actualizado/bovino/${unidad}`,
-          icon: <RxUpdate />,
-          text: "Parte Actualizado",
-        },
-      ],
-    },
-
-    {
-      text: "Ganado Equino",
-      options: [
-        {
-          to: `/inventario/equino/${unidad}`,
-          icon: <MdOutlineInventory />,
-          text: "Inventario",
-        },
-        {
-          to: `/parte-inmediato/equino/${unidad}`,
-          icon: <CgNotes />,
-          text: "Parte Inmediato",
-        },
-        {
-          to: `parte-actualizado/equino/${unidad}`,
-          icon: <RxUpdate />,
-          text: "Parte Actualizado",
-        },
-      ],
-    },
-  ];
-};
-
 const optionsAdmin: OptionGroup[] = [
   {
     text: " Personal",
@@ -99,4 +53,32 @@ const optionsAdmin: OptionGroup[] = [
   },
 ];
 
-export { optionsAdmin, optionsGeneration };
+const optionsUsuario: OptionGroup[] = [
+  {
+    text: "Inventario",
+    options: [
+      {
+        to: "/Inventario",
+        icon: <MdOutlineInventory />,
+        text: "Inventario",
+      },
+    ],
+  },
+  {
+    text: "Registros",
+    options: [
+      {
+        to: "/registrar-salidas",
+        icon: <FaCashRegister />,
+        text: "Salidas",
+      },
+      {
+        to: "/registrar-entradas",
+        icon: <FaCashRegister />,
+        text: "Entradas",
+      },
+    ],
+  },
+];
+
+export { optionsAdmin, optionsUsuario };

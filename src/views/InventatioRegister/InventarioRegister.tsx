@@ -15,7 +15,7 @@ import type {
 import { LuClipboardEdit, LuFileText } from "react-icons/lu";
 import ButtonIcon from "../../components/ButtonIcon/ButtonIcon";
 import axios from "axios";
-
+import { useAuthContext } from "../../contexts/AuthContext/AuthContext";
 const initialStateItem: Item = {
   nombre: "",
   descripcion: "",
@@ -41,7 +41,6 @@ const InventarioRegister: React.FC = () => {
   const [isViewMoreOpen, setViewMoreOpen] = useState<boolean>(false);
   const [newItemData, setNewItemData] = useState<Item>(initialStateItem);
   const [formData, setFormData] = useState<InventarioItem>(firstStateInvetario);
-
   const [formDataEdit, setFormDataEdit] =
     useState<InventarioItem>(firstStateInvetario);
   const [selectedItem, setSelectedItem] = useState<InventarioItem | null>(null);
@@ -50,7 +49,7 @@ const InventarioRegister: React.FC = () => {
   const [modifiedData, setModifiedData] = useState<Partial<InventarioItem>>({});
   const [items, setItems] = useState<InventarioItem[]>([]);
   const { Item } = useInventario();
-
+  const { user } = useAuthContext();
   const generateCode = () => {
     const codeTag = "ITEM";
     const currentQuantity = Items.length + 1;
@@ -60,7 +59,7 @@ const InventarioRegister: React.FC = () => {
   const fetchItems = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:3000/api/v1/inventarios",
+        "http://http://54.221.108.114/:3000/api/v1/inventarios",
       );
       setItems(response.data);
       console.log("Items de inventario", response.data);
@@ -188,11 +187,14 @@ const InventarioRegister: React.FC = () => {
                     onClick={() => handleViewMore(InventarioItem.id)}
                     textTooltip={"Ver más"}
                   />
-                  <ButtonIcon
-                    icon={<LuClipboardEdit />}
-                    onClick={() => handleEdit(InventarioItem.id)}
-                    textTooltip={"Editar"}
-                  />
+
+                  {user?.rol === "administrador" && (
+                    <ButtonIcon
+                      icon={<LuClipboardEdit />}
+                      onClick={() => handleEdit(InventarioItem.id)}
+                      textTooltip={"Editar"}
+                    />
+                  )}
                 </div>
               )}
             </div>

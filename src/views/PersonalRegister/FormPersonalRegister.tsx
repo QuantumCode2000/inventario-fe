@@ -161,8 +161,8 @@ interface FormPersonalRegisterProps {
   handleSubmit: () => void;
 }
 
-const roles = ["ADMIN", "USER"];
-const estados = ["ACTIVO", "INACTIVO"];
+const roles = ["administrador", "usuario"];
+const estados = ["activo", "inactivo"];
 
 const FormPersonalRegister: React.FC<FormPersonalRegisterProps> = ({
   formData,
@@ -226,6 +226,7 @@ const FormPersonalRegister: React.FC<FormPersonalRegisterProps> = ({
           error={localErrors.extension}
         />
         <Input
+          type="email"
           id="email"
           label="Correo Electrónico"
           placeholder="Correo Electrónico"

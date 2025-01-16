@@ -18,58 +18,17 @@ function App() {
       ),
       children: [
         {
-          path: "Reportes-KPI",
-          element: (
-            <PrivateRoute requiredRole="administrador">
-              <p>404</p>
-            </PrivateRoute>
-          ),
-        },
-        {
-          path: "parte-general",
-          element: (
-            <PrivateRoute requiredRole="administrador">
-              <p>q</p>
-            </PrivateRoute>
-          ),
-        },
-        {
           path: "registro-personal",
           element: (
-            <PrivateRoute requiredRole="administrador">
+            <PrivateRoute>
               <PersonalRegister />
             </PrivateRoute>
           ),
         },
         {
-          path: "reportes",
-          element: (
-            <PrivateRoute requiredRole="administrador">
-              <p>q</p>
-            </PrivateRoute>
-          ),
-        },
-        {
-          path: "cuadro-de-mando",
-          element: (
-            <PrivateRoute requiredRole="administrador">
-              <p>q</p>
-            </PrivateRoute>
-          ),
-        },
-        {
-          path: "reportes-novedades",
-          element: (
-            <PrivateRoute requiredRole="administrador">
-              <p>q</p>
-            </PrivateRoute>
-          ),
-        },
-
-        {
           path: "inventario",
           element: (
-            <PrivateRoute requiredRole="administrador">
+            <PrivateRoute>
               <InventarioRegister />
             </PrivateRoute>
           ),
@@ -77,7 +36,7 @@ function App() {
         {
           path: "registrar-entradas",
           element: (
-            <PrivateRoute requiredRole="administrador">
+            <PrivateRoute>
               <EntradasRegister />
             </PrivateRoute>
           ),
@@ -85,7 +44,7 @@ function App() {
         {
           path: "registrar-salidas",
           element: (
-            <PrivateRoute requiredRole="administrador">
+            <PrivateRoute>
               <SalidasRegister />
             </PrivateRoute>
           ),

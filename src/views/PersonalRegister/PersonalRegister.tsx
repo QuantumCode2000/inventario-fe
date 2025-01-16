@@ -21,8 +21,8 @@ const firstState: User = {
   email: "",
   password: "",
   cargo: "",
-  rol: "Usuario",
-  estado: "Activo",
+  rol: "usuario",
+  estado: "activo",
 };
 
 const PersonalRegister: React.FC = () => {
@@ -155,8 +155,6 @@ const PersonalRegister: React.FC = () => {
   return (
     <>
       <Content>
-       
-
         <Table
           header={{
             ...headersUsers.tabla,

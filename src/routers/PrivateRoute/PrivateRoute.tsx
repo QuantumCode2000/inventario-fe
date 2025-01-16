@@ -7,19 +7,16 @@ interface PrivateRouteProps {
   children: React.ReactNode;
 }
 
-const PrivateRoute: React.FC<PrivateRouteProps> = ({
-  requiredRole,
-  children,
-}) => {
-  const { isAuthenticated, user } = useAuthContext();
+const PrivateRoute: React.FC<PrivateRouteProps> = ({ children }) => {
+  const { isAuthenticated } = useAuthContext();
 
   if (!isAuthenticated) {
     return <Navigate to="/login" />;
   }
 
-  if (requiredRole && user?.rol !== requiredRole) {
-    return <Navigate to="/unauthorized" />;
-  }
+  // if (requiredRole && user?.rol !== requiredRole) {
+  //   return <Navigate to="/unauthorized" />;
+  // }
 
   return <>{children}</>;
 };

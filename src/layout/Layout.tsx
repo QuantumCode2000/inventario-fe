@@ -1,7 +1,7 @@
 import Sidebar from "../components/Sidebar/Sidebar";
 import Navbar from "../components/Navbar/Navbar";
 import { Outlet, useLocation } from "react-router-dom";
-import { optionsAdmin } from "../components/Sidebar/options";
+import { optionsAdmin, optionsUsuario } from "../components/Sidebar/options";
 import { useState, useEffect } from "react";
 import { useAuthContext } from "../contexts/AuthContext/AuthContext";
 
@@ -33,7 +33,11 @@ const Layout = () => {
 
     setSelectedTitle(
       findSelectedTitle(
-        user?.rol === "administrador" ? optionsAdmin : null,
+        user?.rol === "administrador"
+          ? optionsAdmin
+          : user?.rol === "usuario"
+          ? optionsUsuario
+          : [],
         location.pathname,
       ),
     );
@@ -43,7 +47,13 @@ const Layout = () => {
     <div className="flex flex-grow min-h-screen bg-gray-100 text-gray-800">
       <Sidebar
         selectedTitle={selectedTitle}
-        options={user?.rol === "administrador" ? optionsAdmin : null}
+        options={
+          user?.rol === "administrador"
+            ? optionsAdmin
+            : user?.rol === "usuario"
+            ? optionsUsuario
+            : null  
+        }
       />
       <main className="main flex flex-col flex-grow -ml-64 md:ml-0 transition-all duration-150 ease-in">
         {user && <Navbar rol={user.rol} nombre={user.nombre} />}
