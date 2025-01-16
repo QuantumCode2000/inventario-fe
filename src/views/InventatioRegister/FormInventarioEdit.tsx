@@ -93,6 +93,15 @@ const FormInventarioEdit: React.FC<FormInventarioEditProps> = ({
           error={localErrors.descripcion}
         />
 
+        <Input
+          id="localizacion"
+          label="Area/Localización"
+          placeholder="Ingrese el area/localización"
+          value={formDataEdit.localizacion}
+          onChange={handleChangeEdit}
+          error={localErrors.precio}
+        />
+
         <div className="flex justify-end mt-4 col-span-1 md:col-span-2">
           <button
             type="submit"

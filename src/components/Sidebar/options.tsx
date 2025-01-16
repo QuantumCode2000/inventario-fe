@@ -1,7 +1,5 @@
-import { CgNotes } from "react-icons/cg";
 import { MdOutlineInventory } from "react-icons/md";
 import { RiUserSettingsFill } from "react-icons/ri";
-import { RxUpdate } from "react-icons/rx";
 import { FaCashRegister } from "react-icons/fa";
 
 interface Option {
@@ -54,6 +52,16 @@ const optionsAdmin: OptionGroup[] = [
 ];
 
 const optionsUsuario: OptionGroup[] = [
+  {
+    text: " Personal",
+    options: [
+      {
+        to: "/registro-personal",
+        icon: <RiUserSettingsFill />,
+        text: "Registro Personal",
+      },
+    ],
+  },
   {
     text: "Inventario",
     options: [

@@ -19,11 +19,11 @@ const Navbar = ({ rol, nombre }) => {
               alt="User Avatar"
               className="h-10 w-10 bg-gray-700 border border-gray-600 rounded-full"
             />
-            <span className="flex flex-col ml-3">
-              <span className="truncate w-20 h-4 font-semibold text-white leading-none">
+            <span className="flex flex-col  w-[15rem] ml-3">
+              <span className="w-full truncate  h-4 font-semibold text-white leading-none uppercase">
                 {nombre}
               </span>
-              <span className="truncate w-20 h-4 text-gray-400 text-xs leading-none">
+              <span className="truncate w-full h-4 text-gray-400 text-xs leading-none uppercase">
                 {rol}
               </span>
             </span>

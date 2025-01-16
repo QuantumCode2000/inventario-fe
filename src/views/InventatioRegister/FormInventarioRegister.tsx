@@ -81,8 +81,8 @@ const FormInventarioRegister: React.FC<FormInventarioRegisterProps> = ({
 
         <Input
           id="categoria"
-          label="Categoría"
-          placeholder="Ingrese la categoría"
+          label="Area/Localizacion"
+          placeholder="Ingrese la Area/Localizacion"
           value={formData.categoria}
           onChange={handleChange}
           error={localErrors.categoria}

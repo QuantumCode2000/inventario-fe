@@ -52,14 +52,24 @@ const InventarioRegister: React.FC = () => {
   const { user } = useAuthContext();
   const generateCode = () => {
     const codeTag = "ITEM";
-    const currentQuantity = Items.length + 1;
-    const code = `${codeTag}${currentQuantity}`;
+    const currentQuantity = items.length + 1;
+
+    // Formatea el número con ceros dependiendo de su longitud
+    const formattedNumber =
+      currentQuantity < 10
+        ? `00${currentQuantity}` // Si es menor que 10, agrega dos ceros
+        : currentQuantity < 100
+        ? `0${currentQuantity}` // Si es menor que 100, agrega un cero
+        : `${currentQuantity}`; // Si es 100 o más, no agrega ceros
+
+    const code = `${codeTag}${formattedNumber}`;
     return code;
   };
+
   const fetchItems = async () => {
     try {
       const response = await axios.get(
-        "http://54.221.108.114:3000/api/v1/inventarios",
+        "http://localhost:3000/api/v1/inventarios",
       );
       setItems(response.data);
       console.log("Items de inventario", response.data);
@@ -88,8 +98,19 @@ const InventarioRegister: React.FC = () => {
     setOpenModal(true);
     setIsEdit(false);
     setFormData(firstStateInvetario);
-    setNewItemData(initialStateItem);
+    setNewItemData({
+      ...initialStateItem,
+      codigo: generateCode(),
+    } as Item);
   };
+  // const openModal = () => {
+  //   setOpenModal(true);
+  //   setIsEdit(false);
+  //   setFormData({
+  //     ...firstStateInvetario,
+  //     codigo: generateCode(), // Genera el código al abrir el modal
+  //   });
+  // };
 
   const handleViewMore = (id: string) => {
     const InventarioItem = Items.find(
@@ -220,13 +241,18 @@ const InventarioRegister: React.FC = () => {
             handleSubmit={handleSubmit}
           />
         ) : (
+          // <FormInventarioRegister
+          //   formData={
+          //     {
+          //       ...newItemData,
+          //       codigo: generateCode(),
+          //     } as Item
+          //   }
+          //   handleChange={handleChange}
+          //   handleSubmit={handleSubmit}
+          // />
           <FormInventarioRegister
-            formData={
-              {
-                ...newItemData,
-                codigo: generateCode(),
-              } as Item
-            }
+            formData={newItemData} // Pasar directamente el estado
             handleChange={handleChange}
             handleSubmit={handleSubmit}
           />

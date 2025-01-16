@@ -1,5 +1,6 @@
 import logo_principal from "../../assets/images/logo_principal.svg";
 import OptionSidebar from "./OptionSidebar";
+import { useAuthContext } from "../../contexts/AuthContext/AuthContext";
 interface Option {
   to: string;
   icon: JSX.Element;
@@ -19,6 +20,7 @@ interface SidebarProps {
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ selectedTitle, options }) => {
+  const { user } = useAuthContext();
   return (
     <aside className="sidebar w-64 md:shadow-right transform -translate-x-full md:translate-x-0 transition-transform duration-150 ease-in bg-gray-900 text-white">
       <div className="sidebar-header flex items-center justify-center flex-col py-6 border-b border-gray-800">
@@ -28,7 +30,7 @@ const Sidebar: React.FC<SidebarProps> = ({ selectedTitle, options }) => {
           </a>
         </div>
         <div className="text-center">
-          <p className="text-lg font-semibold">----------------------------</p>
+          <p className="text-lg font-semibold uppercase">{user?.nombre}</p>
         </div>
       </div>
       <div className="sidebar-content px-6 py-4">

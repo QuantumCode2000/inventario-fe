@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useAuthContext } from "../../contexts/AuthContext/AuthContext";
-import Fondo from "../../assets/images/fondo_login.svg";
+import Fondo from "../../assets/images/fondo_login2.svg";
 import Logo from "../../assets/images/logo_principal.svg";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
@@ -102,9 +102,9 @@ const Login = () => {
               >
                 Ingresar
               </button>
-              <a href="#" className="text-sm hover:underline">
+              {/* <a href="#" className="text-sm hover:underline">
                 ¿Olvidaste la contraseña?
-              </a>
+              </a> */}
             </div>
           </form>
         </div>

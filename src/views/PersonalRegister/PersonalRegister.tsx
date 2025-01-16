@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Button from "../../components/Button/Button";
 import Table from "../../components/Table/Table";
 import { useUsers } from "../../contexts/UsersContext/UsersContext";
-import { headersUsers } from "../../data/headers";
+import { headersUsers, headersUsersForUsuarios } from "../../data/headers";
 import Modal from "../../components/Modal/Modal";
 import FormPersonalRegister from "./FormPersonalRegister";
 import FormPersonalEdit from "./FormPersonalEdit";
@@ -11,6 +11,7 @@ import ViewMore from "../../components/ViewMore/ViewMore";
 import type { User } from "../../contexts/UsersContext/interfaces";
 import { LuClipboardEdit, LuFileText } from "react-icons/lu";
 import ButtonIcon from "../../components/ButtonIcon/ButtonIcon";
+import { useAuthContext } from "../../contexts/AuthContext/AuthContext";
 
 const firstState: User = {
   ci: "",
@@ -35,6 +36,7 @@ const PersonalRegister: React.FC = () => {
   const [error, setError] = useState<string | null>(null); // Estado para manejar errores
   const { users, addUser, updateUser } = useUsers();
   const [modifiedData, setModifiedData] = useState<Partial<User>>({});
+  const { user } = useAuthContext();
 
   const closeModal = () => {
     setOpenModal(false);
@@ -156,11 +158,19 @@ const PersonalRegister: React.FC = () => {
     <>
       <Content>
         <Table
-          header={{
-            ...headersUsers.tabla,
-            acciones: "Acciones",
-            // opciones: "Opciones",
-          }}
+          header={
+            user?.rol === "administrador"
+              ? {
+                  ...headersUsers.tabla,
+                  acciones: "Acciones",
+                  // opciones: "Opciones",
+                }
+              : {
+                  ...headersUsersForUsuarios.tabla,
+                  // acciones: "Acciones",
+                  // opciones: "Opciones",
+                }
+          }
           body={users}
           renderCell={(item, key) => {
             // Type guard para asegurarte de que item es un User
@@ -172,16 +182,27 @@ const PersonalRegister: React.FC = () => {
                     renderCell(item, key as keyof User)}
                   {key === "acciones" && (
                     <div className="flex gap-2">
-                      <ButtonIcon
-                        icon={<LuFileText />}
-                        onClick={() => handleViewMore(item.ci)}
-                        textTooltip={"Ver más"}
-                      />
-                      <ButtonIcon
-                        icon={<LuClipboardEdit />}
-                        onClick={() => handleEdit(item.ci)}
-                        textTooltip={"Editar"}
-                      />
+                      {user?.rol === "administrador" && (
+                        <ButtonIcon
+                          icon={<LuFileText />}
+                          onClick={() => handleViewMore(item.ci)}
+                          textTooltip={"Ver más"}
+                        />
+                      )}
+                      {user?.rol === "administrador" ? (
+                        <ButtonIcon
+                          icon={<LuClipboardEdit />}
+                          onClick={() => handleEdit(item.ci)}
+                          textTooltip={"Editar"}
+                        />
+                      ) : (
+                        <Button
+                          text={"Sin Permisos"}
+
+                          // onClick={openModal}
+                          // textStyle={""}
+                        />
+                      )}
                     </div>
                   )}
                   {/* {key === "opciones" && (
@@ -212,11 +233,13 @@ const PersonalRegister: React.FC = () => {
         />
       </Content>
       <div className="flex justify-end mt-4">
-        <Button
-          text={"Registrar Personal"}
-          onClick={openModal}
-          textStyle={""}
-        />
+        {user?.rol === "administrador" && (
+          <Button
+            text={"Registrar Personal"}
+            onClick={openModal}
+            textStyle={""}
+          />
+        )}
       </div>
       <Modal
         title={isEdit ? "Editar Personal" : "Registrar Personal"}
