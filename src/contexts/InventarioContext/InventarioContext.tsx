@@ -25,7 +25,7 @@ const InventarioProvider: React.FC<{ children: ReactNode }> = ({
   const fetchItems = async () => {
     try {
       const response = await axios.get(
-        "http://http://54.221.108.114/:3000/api/v1/inventarios",
+        "http://54.221.108.114:3000/api/v1/inventarios",
       );
       setItems(response.data);
     } catch (error) {
@@ -43,7 +43,7 @@ const InventarioProvider: React.FC<{ children: ReactNode }> = ({
     try {
       console.log("Datos enviados al servidor:", newItem);
       const response = await axios.post(
-        "http://http://54.221.108.114/:3000/api/v1/items",
+        "http://54.221.108.114:3000/api/v1/items",
         newItem,
       );
       setItems((prevItems) => [...prevItems, response.data]);
@@ -71,7 +71,7 @@ const InventarioProvider: React.FC<{ children: ReactNode }> = ({
         throw new Error("Item no encontrado");
       }
       await axios.delete(
-        `http://http://54.221.108.114/:3000/api/v1/inventarios/${itemToRemove.id}`,
+        `http://54.221.108.114:3000/api/v1/inventarios/${itemToRemove.id}`,
       );
       setItems((prevItems) =>
         prevItems.filter(
@@ -95,7 +95,7 @@ const InventarioProvider: React.FC<{ children: ReactNode }> = ({
     console.log("Datos enviados al servidor:", id);
     try {
       const response = await axios.patch(
-        `http://http://54.221.108.114/:3000/api/v1/inventarios/${id}`,
+        `http://54.221.108.114:3000/api/v1/inventarios/${id}`,
         rest,
       );
       setItems((prevItems) =>
