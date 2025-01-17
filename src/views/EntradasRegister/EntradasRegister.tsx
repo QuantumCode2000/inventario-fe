@@ -28,7 +28,7 @@ const firstState: Entrada = {
   vehiculoEntrega: "No Asignad",
   chofer: "No Asignado",
   nroRemision: "",
-  motivo: "",
+  // motivo: "",
   unidadMedida: "",
   tipoEntrada: "abastecimiento",
 };

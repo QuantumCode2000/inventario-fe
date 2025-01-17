@@ -20,12 +20,13 @@ const FormSalidasRegister: React.FC<FormSalidasRegisterProps> = ({
   const [isConfirmModalOpen, setConfirmModalOpen] = useState(false);
   const [localErrors, setLocalErrors] = useState<Partial<any>>({});
   const [items, setItems] = useState<any[]>([]);
+  const [showCreatedAtField, setShowCreatedAtField] = useState(true); // Controla la visibilidad del campo de fecha
 
   // Llamar a los items desde la API
   const getItems = async () => {
     try {
       const response = await axios.get(
-        "http://54.221.108.114:3000/api/v1/inventarios",
+        "http://localhost:3000/api/v1/inventarios",
       );
       setItems(response.data); // Guardamos los items completos
     } catch (error) {
@@ -53,7 +54,7 @@ const FormSalidasRegister: React.FC<FormSalidasRegisterProps> = ({
     if (!formData.codigo) newErrors.codigo = "Código es requerido";
     if (!formData.item) newErrors.item = "Item es requerido";
     if (!formData.cantidad) newErrors.cantidad = "Cantidad es requerida";
-    if (!formData.motivo) newErrors.motivo = "Motivo es requerido";
+    // if (!formData.motivo) newErrors.motivo = "Motivo es requerido";
     if (!formData.sacadoPor) newErrors.sacadoPor = "Sacado por es requerido";
     if (!formData.destino) newErrors.destino = "Destino es requerido";
     if (!formData.entregadoPor)
@@ -122,13 +123,13 @@ const FormSalidasRegister: React.FC<FormSalidasRegisterProps> = ({
           onChange={handleChange}
           error={localErrors.observaciones}
         />
-        <Input
+        {/* <Input
           id="motivo"
           label="Motivo"
           value={formData.motivo}
           onChange={handleChange}
           error={localErrors.motivo}
-        />
+        /> */}
         <Input
           id="destino"
           label="Destino"
@@ -159,6 +160,17 @@ const FormSalidasRegister: React.FC<FormSalidasRegisterProps> = ({
           error={localErrors.unidadMedida}
           disabled
         />
+
+        {showCreatedAtField && (
+          <Input
+            id="createdAt"
+            label="Fecha de Registro"
+            value={formData.createdAt}
+            onChange={handleChange}
+            error={localErrors.createdAt}
+            type="datetime-local"
+          />
+        )}
         <div className="flex justify-end mt-4 col-span-1 md:col-span-2">
           <button
             type="submit"

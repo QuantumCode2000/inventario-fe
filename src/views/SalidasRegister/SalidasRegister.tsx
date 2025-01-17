@@ -17,7 +17,7 @@ const firstState: Salida = {
   cantidad: 0,
   observaciones: "",
   sacadoPor: "",
-  motivo: "",
+  // motivo: "",
   destino: "",
   entregadoPor: "",
 };
